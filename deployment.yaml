@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sho7
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sho7
+  template:
+    metadata:
+      labels:
+        app: sho7
+    spec:
+      containers:
+      - name: sho7-app
+        image: ghcr.io/vulnapp/vulnapp:0.1.0
+      - name: git-sync
+        image: k8s.gcr.io/git-sync/git-sync:v3.2.2
+        env:
+        - name: GIT_SYNC_REPO
+          value: "git@github.com:VulnApp/VulnApp.git"
+        - name: GIT_SYNC_SSH
+          value: "true"
+        - name: GIT_SYNC_BRANCH
+          value: "main"
+        - name: GIT_SYNC_ROOT
+          value: "/git"
+        - name: GIT_SYNC_DEST
+          value: "app"
+        - name: GIT_SYNC_ONE_TIME
+          value: "true"
+        - name: GIT_KNOWN_HOSTS
+          value: "false"
+        volumeMounts:
+        - name: git-ssh-key
+          mountPath: /etc/git-secret
+          readOnly: true
+        - name: app-code
+          mountPath: /git
+      volumes:
+      - name: git-ssh-key
+        secret:
+          secretName: git-ssh-key
+      - name: app-code
+        emptyDir: {}
