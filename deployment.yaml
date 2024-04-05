@@ -12,9 +12,40 @@ spec:
       labels:
         app: sho7
     spec:
+      initContainers:
+      - name: git-sync-init
+        image: k8s.gcr.io/git-sync/git-sync:v3.2.2
+        env:
+        - name: GIT_SYNC_REPO
+          value: "git@github.com:VulnApp/VulnApp.git"
+        - name: GIT_SYNC_SSH
+          value: "true"
+        - name: GIT_SYNC_BRANCH
+          value: "main"
+        - name: GIT_SYNC_ROOT
+          value: "/git"
+        - name: GIT_SYNC_DEST
+          value: "app"
+        - name: GIT_SYNC_DEPTH
+          value: "1"
+        - name: GIT_SYNC_ONE_TIME
+          value: "true"
+        - name: GIT_KNOWN_HOSTS
+          value: "false"
+        volumeMounts:
+        - name: git-ssh-key
+          mountPath: /etc/git-secret
+          readOnly: true
+        - name: app-code
+          mountPath: /git
       containers:
       - name: sho7-app
-        image: ghcr.io/vulnapp/vulnapp:0.1.0
+        image: ghcr.io/vulnapp/vulnapp:0.3.0
+        volumeMounts:
+        - name: app-code
+          mountPath: /app
+          readOnly: true
+          subPath: app
       - name: git-sync
         image: k8s.gcr.io/git-sync/git-sync:v3.2.2
         env:
@@ -28,8 +59,10 @@ spec:
           value: "/git"
         - name: GIT_SYNC_DEST
           value: "app"
-        - name: GIT_SYNC_ONE_TIME
-          value: "true"
+        - name: GIT_SYNC_DEPTH
+          value: "1"
+        - name: GIT_SYNC_WAIT
+          value: "10"
         - name: GIT_KNOWN_HOSTS
           value: "false"
         volumeMounts:
@@ -44,3 +77,6 @@ spec:
           secretName: git-ssh-key
       - name: app-code
         emptyDir: {}
+      - name: default-files
+        configMap:
+          name: empty-app
