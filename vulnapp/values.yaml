@@ -1,0 +1,13 @@
+version: 0.5.0
+repository: "git@github.com:VulnApp/VulnApp.git"
+
+sho7:
+  port: 8000
+
+signoz-infra:
+  enabled: true
+  otelCollectorEndpoint: ""
+  otelInsecure: false
+  signozApiKey: ""
+  global.clusterName: "sho7-cluster"
+

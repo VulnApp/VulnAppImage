@@ -17,7 +17,7 @@ spec:
         image: k8s.gcr.io/git-sync/git-sync:v3.2.2
         env:
         - name: GIT_SYNC_REPO
-          value: "git@github.com:VulnApp/VulnApp.git"
+          value: "{{ .Values.repository }}"
         - name: GIT_SYNC_SSH
           value: "true"
         - name: GIT_SYNC_BRANCH
@@ -40,7 +40,10 @@ spec:
           mountPath: /git
       containers:
       - name: sho7-app
-        image: ghcr.io/vulnapp/vulnapp:0.4.0
+        image: "ghcr.io/vulnapp/vulnapp:{{ .Values.version }}"
+        ports:
+        - name: http
+          containerPort: 5000
         volumeMounts:
         - name: app-code
           mountPath: /app
@@ -57,7 +60,7 @@ spec:
         image: k8s.gcr.io/git-sync/git-sync:v3.2.2
         env:
         - name: GIT_SYNC_REPO
-          value: "git@github.com:VulnApp/VulnApp.git"
+          value: "{{ .Values.repository }}"
         - name: GIT_SYNC_SSH
           value: "true"
         - name: GIT_SYNC_BRANCH
