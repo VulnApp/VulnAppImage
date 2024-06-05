@@ -1,2 +1,2 @@
 #!/bin/sh
-gunicorn --bind 0.0.0.0 --reload --env SCRIPT_NAME=$ROOT_PATH sho7.app:app
+python sho7/database/initialisation.py && python sho7/app.py
