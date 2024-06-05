@@ -1,3 +1,3 @@
 #!/bin/sh
 PYTHONPATH=.:$PYTHONPATH python sho7/database/initialisation.py
-PYTHONPATH=.:$PYTHONPATH python sho7/app.py
+waitress-serve --host 0.0.0.0 --port 8022 --threads 1 sho7.app:app
