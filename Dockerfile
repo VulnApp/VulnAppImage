@@ -10,6 +10,7 @@ RUN pip install \
     flask==3.0.2 \
     gunicorn==21.2.0 \
     psycopg==3.1.18 \
+    waitress==3.0.0 \
     psycopg-binary==3.1.18 \
     pyjwt==0.3.0 \
     watchdog==4.0.0 \
