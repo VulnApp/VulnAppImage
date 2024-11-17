@@ -20,6 +20,7 @@ RUN pip install \
     opentelemetry-instrumentation==0.45b0 \
     opentelemetry-instrumentation-flask==0.45b0 \
     opentelemetry-instrumentation-jinja2==0.45b0 \
+    opentelemetry-instrumentation-logging==0.45b0 \
     opentelemetry-instrumentation-psycopg==0.45b0
 
 COPY empty_app.py sho7/app.py
