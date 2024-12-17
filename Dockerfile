@@ -21,7 +21,8 @@ RUN pip install \
     opentelemetry-instrumentation-flask==0.45b0 \
     opentelemetry-instrumentation-jinja2==0.45b0 \
     opentelemetry-instrumentation-logging==0.45b0 \
-    opentelemetry-instrumentation-psycopg==0.45b0
+    opentelemetry-instrumentation-psycopg==0.45b0 \
+    smart-flask-instrumentator==0.1.1
 
 COPY empty_app.py sho7/app.py
 COPY entrypoint.sh /entrypoint.sh
