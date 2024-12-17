@@ -8,7 +8,7 @@ RUN pip install \
     boto3==1.35.55 \
     certifi==2024.2.2 \
     curlquest==0.1.1 \
-    flask==3.0.2 \
+    flask==3.1.0 \
     gunicorn==21.2.0 \
     psycopg==3.1.18 \
     psycopg-binary==3.1.18 \
